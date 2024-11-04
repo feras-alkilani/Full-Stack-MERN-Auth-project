@@ -1,9 +1,15 @@
-import User from "../models/user.model.js";
+import express from "express";
+import {
+  test,
+  updateUser,
+  deleteUser
+} from "../controllers/user.controller.js";
+import { verifyToken } from "../utils/verifyUser.js";
 
-const test = (req, res) => {
-  res.json({
-    message: "API is working!"
-  });
-};
+const router = express.Router();
 
-export default test;
+router.get("/", test);
+router.post("/update/:id", verifyToken, updateUser);
+router.delete("/delete/:id", verifyToken, deleteUser);
+
+export default router;
